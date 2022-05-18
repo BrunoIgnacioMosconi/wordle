@@ -1,0 +1,42 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    text-align: center;
+    font-size: 50px;
+    margin-bottom: 100px;
+}
+
+#board {
+    display: flex;
+    flex-wrap: wrap;
+    width: 500px;
+    height: 500px;
+}
+
+.letterContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    margin: 5px;
+    border: 1px solid #000;
+}
+
+.haveItInThatPossition { 
+    background-color: green;
+}
+
+.haveItInOtherPossition {
+    background-color: yellow;
+}
+
+.dontHaveIt {
+    background-color: gray;
+}
+
