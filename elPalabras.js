@@ -51,18 +51,18 @@ start = () => {
                 const currentLetterContainer = document.getElementById(row.toString() + column.toString());
                 if (currentLetterContainer.innerText === "") {
                     currentLetterContainer.innerText = e.key.toUpperCase() ;
-                    column+=1;
+                    column++;
                 }
             }
         } else if(e.code === "Backspace") {
             if (column > 0 && column < (opportunities + 1)) {
-               column-=1;
+               column--;
                const currentLetterContainer = document.getElementById(row.toString() + column.toString());
                currentLetterContainer.innerText = "";
             }
         } else if (e.code === "Enter" && column === 5) {
             check();
-            row +=1;
+            row++;
             column = 0;
         }
 
@@ -81,7 +81,7 @@ check = () => {
 
         if (word[c] == letter) {
             currentLetterContainer.classList.add("haveItInThatPossition");
-            correct += 1;
+            correct++;
         } else if (word.includes(letter)) {
             currentLetterContainer.classList.add("haveItInOtherPossition");
         } else {
