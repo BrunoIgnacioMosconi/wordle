@@ -74,20 +74,31 @@ start = () => {
 }
 
 check = () => {
+    let wordForChecking = word;
     let correct = 0;
+
     for (let c = 0; c < lettersAmount; c++) {
         const currentLetterContainer = document.getElementById(row.toString() + c.toString());
         let letter = currentLetterContainer.innerText.toLowerCase();
-
-        if (word[c] == letter) {
+        currentLetterContainer.classList.add("dontHaveIt");
+        if (wordForChecking[c] == letter) {
+            currentLetterContainer.classList.remove("dontHaveIt");
             currentLetterContainer.classList.add("haveItInThatPossition");
+            wordForChecking = wordForChecking.replace(letter,"-")
             correct++;
-        } else if (word.includes(letter)) {
-            currentLetterContainer.classList.add("haveItInOtherPossition");
-        } else {
-            currentLetterContainer.classList.add("dontHaveIt");
-        }
+        } 
 
         if (correct === lettersAmount) finish = true;
+    }
+    if (!finish) {
+        for (let h = 0; h < lettersAmount; h++) {
+            const currentLetterContainer = document.getElementById(row.toString() + h.toString());
+            let letter = currentLetterContainer.innerText.toLowerCase();
+            if (wordForChecking.includes(letter)) {
+                currentLetterContainer.classList.remove("dontHaveIt");
+                currentLetterContainer.classList.add("haveItInOtherPossition");
+                wordForChecking = wordForChecking.replace(letter,"-")
+            }
+        }
     }
 }
