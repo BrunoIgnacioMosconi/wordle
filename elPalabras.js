@@ -1,16 +1,18 @@
 const unicWords = [...new Set(wordsToGuess)].filter(word => word.length === 5)
-console.log(unicWords)
-const opportunities = 5;
+const opportunities = 6;
 const lettersAmount = 5;
 let row = 0;
 let column = 0;
 let finish = false;
 const word = unicWords[Math.floor(Math.random() * unicWords.length)];
-console.log(word)
 // const word = unicWords[Math.round(Math.random() * (unicWords.length - 1))]; //another way to select a word
 
 window.onload = () => {
     start();
+}
+
+const reload = () => {
+    location.reload();
 }
 
 start = () => {
