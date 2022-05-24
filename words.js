@@ -51,6 +51,14 @@ const wordsToGuess = [
   'atril',
   'mundo',
   'mojar',
+  'fuego',
+  'nieto',
+  'volco',
+  'manco',
+  'abaco',
+  'feria',
+  'errar',
+  'jalea',
 ];
 
 // Check if a word is more than once
