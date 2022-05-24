@@ -1,31 +1,13 @@
-const wordsToGuess = [
-    "canto",
-    "caspa",
-    "cenar",
-    "cielo",
-    "cocer",
-    "comer",
-    "coser",
-    "creer",
-    "gusta",
-    "habla",
-    "poner",
-    "resta",
-    "rubia",
-    "saber",
-    "sitio",
-    "tener",
-    "tenor",
-    "tomar",
-    "vocal",
-];
+const unicWords = [...new Set(wordsToGuess)].filter(word => word.length === 5)
+console.log(unicWords)
 const opportunities = 5;
 const lettersAmount = 5;
 let row = 0;
 let column = 0;
 let finish = false;
-const word = wordsToGuess[Math.floor(Math.random() * wordsToGuess.length)];
-// const word = wordsToGuess[Math.round(Math.random() * (wordsToGuess.length - 1))]; //another way to select a word
+const word = unicWords[Math.floor(Math.random() * unicWords.length)];
+console.log(word)
+// const word = unicWords[Math.round(Math.random() * (unicWords.length - 1))]; //another way to select a word
 
 window.onload = () => {
     start();
@@ -86,7 +68,7 @@ check = () => {
             currentLetterContainer.classList.add("haveItInThatPossition");
             wordForChecking = wordForChecking.replace(letter,"-")
             correct++;
-        } 
+        }
 
         if (correct === lettersAmount) finish = true;
     }
