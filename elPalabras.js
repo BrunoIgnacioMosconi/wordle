@@ -1,11 +1,16 @@
-const unicWords = [...new Set(wordsToGuess)].filter(word => word.length === 5)
 const opportunities = 6;
 const lettersAmount = 5;
 let row = 0;
 let column = 0;
 let finish = false;
-const word = unicWords[Math.floor(Math.random() * unicWords.length)];
-// const word = unicWords[Math.round(Math.random() * (unicWords.length - 1))]; //another way to select a word
+let word = wordsToGuess[Math.floor(Math.random() * wordsToGuess.length)];
+const wordMode = 'withoutAccents';
+const gameMode = 'practice';
+
+if(wordMode === 'withoutAccents') {
+    word = word.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+console.log("word",word)
 
 window.onload = () => {
     start();
@@ -46,8 +51,6 @@ start = () => {
             }
         } else if (e.code === "Enter" && column === 5) {
             check();
-            row++;
-            column = 0;
         }
 
         if (!finish && row === opportunities) {
@@ -58,31 +61,42 @@ start = () => {
 }
 
 check = () => {
-    let wordForChecking = word;
-    let correct = 0;
 
-    for (let c = 0; c < lettersAmount; c++) {
-        const currentLetterContainer = document.getElementById(row.toString() + c.toString());
-        let letter = currentLetterContainer.innerText.toLowerCase();
-        currentLetterContainer.classList.add("dontHaveIt");
-        if (wordForChecking[c] == letter) {
-            currentLetterContainer.classList.remove("dontHaveIt");
-            currentLetterContainer.classList.add("haveItInThatPossition");
-            wordForChecking = wordForChecking.replace(letter,"-")
-            correct++;
-        }
-
-        if (correct === lettersAmount) finish = true;
+    let writenWord = ''
+    for (let i = 0; i < 5; i++) {
+        writenWord += document.getElementById(row.toString() + i.toString()).innerText.toLowerCase();
     }
-    if (!finish) {
-        for (let h = 0; h < lettersAmount; h++) {
-            const currentLetterContainer = document.getElementById(row.toString() + h.toString());
+
+    if (arr.includes(writenWord)) {
+        let wordForChecking = word;
+        let correct = 0;
+
+        for (let c = 0; c < lettersAmount; c++) {
+            const currentLetterContainer = document.getElementById(row.toString() + c.toString());
             let letter = currentLetterContainer.innerText.toLowerCase();
-            if (wordForChecking.includes(letter)) {
+            currentLetterContainer.classList.add("dontHaveIt");
+            if (wordForChecking[c] == letter) {
                 currentLetterContainer.classList.remove("dontHaveIt");
-                currentLetterContainer.classList.add("haveItInOtherPossition");
+                currentLetterContainer.classList.add("haveItInThatPossition");
                 wordForChecking = wordForChecking.replace(letter,"-")
+                correct++;
+            }
+
+            if (correct === lettersAmount && gameMode !== 'practice') finish = true;
+            if (correct === lettersAmount && gameMode === 'practice') reload();
+        }
+        if (!finish) {
+            for (let h = 0; h < lettersAmount; h++) {
+                const currentLetterContainer = document.getElementById(row.toString() + h.toString());
+                let letter = currentLetterContainer.innerText.toLowerCase();
+                if (wordForChecking.includes(letter)) {
+                    currentLetterContainer.classList.remove("dontHaveIt");
+                    currentLetterContainer.classList.add("haveItInOtherPossition");
+                    wordForChecking = wordForChecking.replace(letter,"-")
+                }
             }
         }
-    }
+        row++;
+        column = 0;
+    } else alert("no existe esa palabra")
 }
