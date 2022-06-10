@@ -10,7 +10,6 @@ const gameMode = 'practice';
 if(wordMode === 'withoutAccents') {
     word = word.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
-console.log("word",word)
 
 window.onload = () => {
     start();
@@ -89,10 +88,12 @@ check = () => {
             for (let h = 0; h < lettersAmount; h++) {
                 const currentLetterContainer = document.getElementById(row.toString() + h.toString());
                 let letter = currentLetterContainer.innerText.toLowerCase();
-                if (wordForChecking.includes(letter)) {
-                    currentLetterContainer.classList.remove("dontHaveIt");
-                    currentLetterContainer.classList.add("haveItInOtherPossition");
-                    wordForChecking = wordForChecking.replace(letter,"-")
+                if (currentLetterContainer.classList[1] !== "haveItInThatPossition") {
+                    if (wordForChecking.includes(letter)) {
+                        currentLetterContainer.classList.remove("dontHaveIt");
+                        currentLetterContainer.classList.add("haveItInOtherPossition");
+                        wordForChecking = wordForChecking.replace(letter,"-")
+                    }
                 }
             }
         }
