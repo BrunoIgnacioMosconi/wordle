@@ -23,6 +23,14 @@ h1 {
     height: 450px;
 }
 
+#keyboard {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 50px;
+    width: 590px;
+}
+
 .letterContainer {
     display: flex;
     align-items: center;
@@ -32,6 +40,19 @@ h1 {
     margin: 5px;
     border: 2px solid #000;
 }
+
+.keyboardLetterContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 55px;
+    margin: 5px;
+    font-size: 14px;
+    border: 2px solid #000;
+    background-color: #D3D6DA;
+}
+
 
 .haveItInThatPossition {
     background-color: #6aaa64;
@@ -51,7 +72,8 @@ h1 {
 #refreshButtonContainer {
     display: flex;
     justify-content: end;
-    width: 360px;
+    margin-top: 30px;
+    width: 900px;
 }
 
 #refreshButton {

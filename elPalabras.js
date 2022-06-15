@@ -4,10 +4,11 @@ let row = 0;
 let column = 0;
 let finish = false;
 let word = wordsToGuess[Math.floor(Math.random() * wordsToGuess.length)];
-const wordMode = 'withoutAccents';
+let wordMode = 'withoutAccents';
 let gameMode = 'normal';
+const keyboard = ['Q','W','E','R','T','Y','U','I','O','P','A','S','D','F','G','H','J','K','L','Ñ','Z','X','C','V','B','N','M'];
 
-normalizeWord = (w) =>{
+normalizeWord = (w) => {
     return w.normalize('NFD')
     .replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi,"$1$2")
     .normalize();
@@ -34,6 +35,14 @@ start = () => {
             letterContainer.innerText = "";
             document.getElementById("board").appendChild(letterContainer);
         }
+    }
+
+    for (let kb = 0; kb < keyboard.length; kb++) {
+        const letterContainer = document.createElement("div");
+        letterContainer.id = "kb" + kb.toString();
+        letterContainer.classList.add("keyboardLetterContainer");
+        letterContainer.innerText = keyboard[kb];
+        document.getElementById("keyboard").appendChild(letterContainer);
     }
 
     document.addEventListener("keyup", (e) => {
@@ -75,12 +84,28 @@ check = () => {
     if (arr.find(word => normalizeWord(word) === writenWord) || wordsToGuess.find(word => normalizeWord(word) === writenWord)) {
         let wordForChecking = word;
         let correct = 0;
+        for (let kbc = 0; kbc < keyboard.length; kbc++) {
+            for (let c = 0; c < writenWord.length; c++) {
+                if (writenWord[c] == keyboard[kbc].toLowerCase() &&
+                    (document.getElementById("kb" + kbc.toString()).classList[1] != "haveItInThatPossition") &&
+                    (document.getElementById("kb" + kbc.toString()).classList[1] != "haveItInOtherPossition")) {
+                    document.getElementById("kb" + kbc.toString()).classList.add("dontHaveIt");
+                }
+            }
+        }
 
         for (let c = 0; c < lettersAmount; c++) {
             const currentLetterContainer = document.getElementById(row.toString() + c.toString());
             let letter = currentLetterContainer.innerText.toLowerCase();
             currentLetterContainer.classList.add("dontHaveIt");
             if (wordForChecking[c] == letter) {
+                for (let kbc = 0; kbc < keyboard.length; kbc++) {
+                    if (letter == (document.getElementById("kb" + kbc.toString()).innerText.toLowerCase())) {
+                        document.getElementById("kb" + kbc.toString()).classList.remove("dontHaveIt");
+                        document.getElementById("kb" + kbc.toString()).classList.remove("haveItInOtherPossition");
+                        document.getElementById("kb" + kbc.toString()).classList.add("haveItInThatPossition");
+                    }
+                }
                 currentLetterContainer.classList.remove("dontHaveIt");
                 currentLetterContainer.classList.add("haveItInThatPossition");
                 wordForChecking = wordForChecking.replace(letter,"-")
@@ -95,6 +120,12 @@ check = () => {
                 let letter = currentLetterContainer.innerText.toLowerCase();
                 if (currentLetterContainer.classList[1] !== "haveItInThatPossition") {
                     if (wordForChecking.includes(letter)) {
+                        for (let kbc = 0; kbc < keyboard.length; kbc++) {
+                            if (letter == (document.getElementById("kb" + kbc.toString()).innerText.toLowerCase()) && (document.getElementById("kb" + kbc.toString()).classList[1] != "haveItInThatPossition")) {
+                                document.getElementById("kb" + kbc.toString()).classList.remove("dontHaveIt");
+                                document.getElementById("kb" + kbc.toString()).classList.add("haveItInOtherPossition");
+                            }
+                        }
                         currentLetterContainer.classList.remove("dontHaveIt");
                         currentLetterContainer.classList.add("haveItInOtherPossition");
                         wordForChecking = wordForChecking.replace(letter,"-")
@@ -104,5 +135,6 @@ check = () => {
         }
         row++;
         column = 0;
+
     } else alert("no existe esa palabra")
 }
