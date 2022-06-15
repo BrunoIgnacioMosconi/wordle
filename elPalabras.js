@@ -5,10 +5,16 @@ let column = 0;
 let finish = false;
 let word = wordsToGuess[Math.floor(Math.random() * wordsToGuess.length)];
 const wordMode = 'withoutAccents';
-const gameMode = 'practice';
+let gameMode = 'normal';
+
+normalizeWord = (w) =>{
+    return w.normalize('NFD')
+    .replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi,"$1$2")
+    .normalize();
+}
 
 if(wordMode === 'withoutAccents') {
-    word = word.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    word = normalizeWord(word)
 }
 
 window.onload = () => {
@@ -34,7 +40,7 @@ start = () => {
         if (finish) return;
 
         //e.key devuelve la letra pero no valida los caracteres especiales en el if de abajo
-        if ("KeyA" <= e.code && e.code <= "KeyZ") {
+        if (("KeyA" <= e.code && e.code <= "KeyZ") || (e.key === "ñ")) {
             if (column < lettersAmount) {
                 const currentLetterContainer = document.getElementById(row.toString() + column.toString());
                 if (currentLetterContainer.innerText === "") {
@@ -65,8 +71,8 @@ check = () => {
     for (let i = 0; i < 5; i++) {
         writenWord += document.getElementById(row.toString() + i.toString()).innerText.toLowerCase();
     }
-
-    if (arr.includes(writenWord)) {
+    // this if compares without accents
+    if (arr.find(word => normalizeWord(word) === writenWord) || wordsToGuess.find(word => normalizeWord(word) === writenWord)) {
         let wordForChecking = word;
         let correct = 0;
 
@@ -81,8 +87,7 @@ check = () => {
                 correct++;
             }
 
-            if (correct === lettersAmount && gameMode !== 'practice') finish = true;
-            if (correct === lettersAmount && gameMode === 'practice') reload();
+            if (correct === lettersAmount) finish = true;
         }
         if (!finish) {
             for (let h = 0; h < lettersAmount; h++) {
