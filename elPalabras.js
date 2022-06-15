@@ -6,7 +6,7 @@ let finish = false;
 let word = wordsToGuess[Math.floor(Math.random() * wordsToGuess.length)];
 let wordMode = 'withoutAccents';
 let gameMode = 'normal';
-const keyboard = ['Q','W','E','R','T','Y','U','I','O','P','A','S','D','F','G','H','J','K','L','Ñ','Z','X','C','V','B','N','M'];
+const keyboard = ['Q','W','E','R','T','Y','U','I','O','P','A','S','D','F','G','H','J','K','L','Ñ','ENTER','Z','X','C','V','B','N','M','BACKSPACE'];
 
 normalizeWord = (w) => {
     return w.normalize('NFD')
@@ -39,15 +39,39 @@ start = () => {
 
     for (let kb = 0; kb < keyboard.length; kb++) {
         const letterContainer = document.createElement("div");
+        letterContainer.addEventListener("click", () => {
+            if (keyboard[kb] === "BACKSPACE") {
+                if (column > 0 && column < (opportunities + 1)) {
+                    column--;
+                    const currentLetterContainer = document.getElementById(row.toString() + column.toString());
+                    currentLetterContainer.innerText = "";
+                }
+            } else if (keyboard[kb] === "ENTER") {
+                if(column === 5) check()
+            } else if (column < lettersAmount) {
+                const currentLetterContainer = document.getElementById(row.toString() + column.toString());
+                if (currentLetterContainer.innerText === "") {
+                    currentLetterContainer.innerText = keyboard[kb] ;
+                    column++;
+                }
+            }
+        })
         letterContainer.id = "kb" + kb.toString();
         letterContainer.classList.add("keyboardLetterContainer");
-        letterContainer.innerText = keyboard[kb];
+        letterContainer.innerText = keyboard[kb]
+        if(keyboard[kb] === "ENTER") {
+            letterContainer.classList.add("keyboardEnterLetterContainer");
+        } else if (keyboard[kb] === "BACKSPACE") {
+            letterContainer.classList.add("keyboardBackspaceLetterContainer")
+            letterContainer.innerText = '<-';
+        } else {
+            letterContainer.classList.add("keyboardLetterContainer");
+        }
         document.getElementById("keyboard").appendChild(letterContainer);
     }
 
     document.addEventListener("keyup", (e) => {
         if (finish) return;
-
         //e.key devuelve la letra pero no valida los caracteres especiales en el if de abajo
         if (("KeyA" <= e.code && e.code <= "KeyZ") || (e.key === "ñ")) {
             if (column < lettersAmount) {

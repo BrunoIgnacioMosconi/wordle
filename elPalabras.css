@@ -41,18 +41,27 @@ h1 {
     border: 2px solid #000;
 }
 
-.keyboardLetterContainer {
+.keyboardLetterContainer,
+.keyboardEnterLetterContainer,
+.keyboardBackspaceLetterContainer {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 45px;
     height: 55px;
-    margin: 5px;
+    margin: 3px;
     font-size: 14px;
     border: 2px solid #000;
     background-color: #D3D6DA;
 }
 
+.keyboardEnterLetterContainer {
+    width: 85px;
+}
+
+.keyboardBackspaceLetterContainer {
+    width: 60px;
+}
 
 .haveItInThatPossition {
     background-color: #6aaa64;
