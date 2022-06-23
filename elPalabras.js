@@ -39,7 +39,8 @@ start = () => {
 
     for (let kb = 0; kb < keyboard.length; kb++) {
         const letterContainer = document.createElement("div");
-        letterContainer.addEventListener("click", () => {
+        letterContainer.addEventListener("mouseup", (e) => {
+            if (finish) return;
             if (keyboard[kb] === "BACKSPACE") {
                 if (column > 0 && column < (opportunities + 1)) {
                     column--;
@@ -55,7 +56,12 @@ start = () => {
                     column++;
                 }
             }
+            if (!finish && row === opportunities) {
+                finish = true;
+                document.getElementById("answer").innerText = word;
+            }
         })
+
         letterContainer.id = "kb" + kb.toString();
         letterContainer.classList.add("keyboardLetterContainer");
         letterContainer.innerText = keyboard[kb]
@@ -87,7 +93,7 @@ start = () => {
                const currentLetterContainer = document.getElementById(row.toString() + column.toString());
                currentLetterContainer.innerText = "";
             }
-        } else if (e.code === "Enter" && column === 5) {
+        } else if (e.code === "Enter" && column === lettersAmount) {
             check();
         }
 
