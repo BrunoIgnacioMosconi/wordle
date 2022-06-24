@@ -66,16 +66,19 @@ h1 {
 .haveItInThatPossition {
     background-color: #6aaa64;
     color: #FFFFFF;
+    border-color: #6aaa64;
 }
 
 .haveItInOtherPossition {
     background-color: #c9b458;
     color: #FFFFFF;
+    border-color: #c9b458;
 }
 
 .dontHaveIt {
     background-color: #787c7e;
     color: #FFFFFF;
+    border-color: #787c7e;
 }
 
 #refreshButtonContainer {
