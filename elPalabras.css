@@ -38,7 +38,7 @@ h1 {
     width: 60px;
     height: 60px;
     margin: 5px;
-    border: 2px solid #000;
+    border: 2px solid #d3d6da;
 }
 
 .keyboardLetterContainer,
@@ -47,11 +47,11 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 45px;
+    width: 49px;
     height: 55px;
     margin: 3px;
     font-size: 14px;
-    border: 2px solid #000;
+    border-radius: 6px;
     background-color: #D3D6DA;
 }
 
@@ -87,4 +87,62 @@ h1 {
 
 #refreshButton {
     width: 64px;
+}
+
+@media(max-width: 690px) {
+    body {
+        font-size: 30px;
+        height: 100vh;
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    #refreshButtonContainer {
+        width: 90vw;
+    }
+
+    h1 {
+        margin-top: 15px;
+        margin-bottom: 20px;
+    }
+
+    #keyboard {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: flex-end;
+        margin-top: 20px;
+        width: 345px
+    }
+
+    #board {
+        width: 325px;
+        height: 45vh;
+    }
+
+    .letterContainer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 45px;
+        height: 45px;
+        margin: 3px;
+    }
+
+    .keyboardLetterContainer {
+        width: 29px;
+        margin: 2px;
+        margin-top: 4px;
+        margin-bottom: 0px;
+    }
+
+    .keyboardEnterLetterContainer {
+        width: 65px;
+        margin: 0px;
+    }
+
+    .keyboardBackspaceLetterContainer {
+        width: 40px;
+        margin: 0px;
+    }
 }
